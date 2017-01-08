@@ -1,6 +1,6 @@
-# to-do
+# ToDoVueWebpackExample
 
-> A Vue.js project
+> TodoMVC with Vue and webpack, based on vue-webpack-boilerplate.
 
 ## Build Setup
 
