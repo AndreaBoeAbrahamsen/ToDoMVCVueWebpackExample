@@ -2,14 +2,7 @@
     <section class="main" v-show="todos.length">
       <input class="toggle-all" type="checkbox" v-model="allDone">
       <ul class="todo-list">
-        <li class="todo" v-for="todo in filteredTodos" :class="{completed: todo.completed, editing: todo == editedTodo}">
-          <div class="view">
-            <input class="toggle" type="checkbox" v-model="todo.completed">
-            <label @dblclick="editTodo(todo)">{{todo.title}}</label>
-            <button class="destroy" @click="removeTodo(todo)"></button>
-          </div>
-          <input class="edit" type="text" v-model="todo.title" v-todo-focus="todo == editedTodo" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" @keyup.esc="cancelEdit(todo)">
-        </li>
+        <to-do-list-item v-for="todo in filteredTodos" v-bind:todo="todo" v-on:remove-todo="removeTodo" v-on:remove-completed="removeCompleted"></to-do-list-item>
       </ul>
     </section>
 </template>
@@ -25,6 +18,8 @@
 </style>
 
 <script>
+import ToDoListItem from './ToDoListItem'
+
 export default{
   props: {
     todos: {
@@ -36,11 +31,6 @@ export default{
     visibility: {
       type: String,
       default: 'All'
-    }
-  },
-  data () {
-    return {
-      editedTodo: null
     }
   },
   computed: {
@@ -68,36 +58,14 @@ export default{
       var index = this.todos.indexOf(todo)
       this.todos.splice(index, 1)
     },
-    editTodo: function (todo) {
-      this.beforeEditCache = todo.title
-      this.editedTodo = todo
-    },
-    doneEdit: function (todo) {
-      if (!this.editedTodo) {
-        return
-      }
-      this.editedTodo = null
-      todo.title = todo.title.trim()
-      if (!todo.title) {
-        this.removeTodo(todo)
-      }
-    },
-    cancelEdit: function (todo) {
-      this.editedTodo = null
-      todo.title = this.beforeEditCache
-    },
     removeCompleted: function () {
       this.todos = this.todos.filter(function (todo) {
         return !todo.completed
       })
     }
   },
-  directives: {
-    'todo-focus': function (el, binding) {
-      if (binding.value) {
-        el.focus()
-      }
-    }
+  components: {
+    ToDoListItem
   }
 }
 </script>
