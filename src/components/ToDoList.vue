@@ -19,6 +19,7 @@
 
 <script>
 import ToDoListItem from './ToDoListItem'
+import Filters from 'exports-loader?filters!../scripts/filters'
 
 export default{
   props: {
@@ -35,12 +36,7 @@ export default{
   },
   computed: {
     filteredTodos: function () {
-      return this.todos
-    },
-    remaining: function () {
-      return this.todos.filter(function (todo) {
-        return !todo.completed
-      }).length
+      return Filters[this.visibility](this.todos)
     },
     allDone: {
       get: function () {
@@ -59,9 +55,7 @@ export default{
       this.todos.splice(index, 1)
     },
     removeCompleted: function () {
-      this.todos = this.todos.filter(function (todo) {
-        return !todo.completed
-      })
+      this.$emit('remove-completed')
     }
   },
   components: {

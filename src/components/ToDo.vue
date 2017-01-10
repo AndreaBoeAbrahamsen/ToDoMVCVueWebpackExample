@@ -5,11 +5,14 @@
       <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo">
     </header>
     <to-do-list v-bind:todos="todos" v-bind:visibility="visibility"></to-do-list>
+    <to-do-footer v-show="todos.length" v-bind:todos="todos" v-bind:visibility="visibility" v-on:remove-completed="removeCompleted"></to-do-footer>
   </section>
 </template>
 
 <script>
 import ToDoList from './ToDoList'
+import ToDoFooter from './ToDoFooter'
+import Filters from 'exports-loader?filters!../scripts/filters'
 
 export default {
   name: 'toDo',
@@ -28,10 +31,14 @@ export default {
       }
       this.todos.push({ title: value, completed: false })
       this.newTodo = ''
+    },
+    removeCompleted: function () {
+      this.todos = Filters.active(this.todos)
     }
   },
   components: {
-    ToDoList
+    ToDoList,
+    ToDoFooter
   }
 }
 </script>
