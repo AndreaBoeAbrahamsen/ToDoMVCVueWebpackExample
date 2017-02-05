@@ -13,14 +13,26 @@
 import ToDoList from './ToDoList'
 import ToDoFooter from './ToDoFooter'
 import Filters from 'exports-loader?filters!../scripts/filters'
+import ToDoStorage from '../scripts/todoStorage'
 
 export default {
   name: 'toDo',
   data () {
     return {
-      todos: [],
-      newTodo: '',
-      visibility: 'all'
+      todos: ToDoStorage.fetch(),
+      newTodo: ''
+    }
+  },
+  props: {
+    visibility: {
+      type: String,
+      default: 'All'
+    }
+  },
+  watch: {
+    todos: {
+      deep: true,
+      handler: ToDoStorage.save
     }
   },
   methods: {
