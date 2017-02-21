@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <to-do v-bind:visibility="visibility"></to-do>
+    <to-do></to-do>
     <footer class="info">
       <p>Double-click to edit a todo</p>
       <p>Written by Andrea B.A.</p>
@@ -15,22 +15,6 @@ import ToDo from './components/ToDo'
 
 export default {
   name: 'app',
-  data () {
-    return {
-      visibility: 'all'
-    }
-  },
-  props: {
-    filter: {
-      type: String,
-      default: 'All'
-    }
-  },
-  watch: {
-    filter: function (val) {
-      this.visibility = val
-    }
-  },
   components: {
     ToDo
   }

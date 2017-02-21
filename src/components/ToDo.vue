@@ -4,8 +4,8 @@
       <h1>todos</h1>
       <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo">
     </header>
-    <to-do-list v-bind:todos="todos" v-bind:visibility="visibility"></to-do-list>
-    <to-do-footer v-show="todos.length" v-bind:todos="todos" v-bind:visibility="visibility" v-on:remove-completed="removeCompleted"></to-do-footer>
+    <to-do-list v-bind:todos="todos"></to-do-list>
+    <to-do-footer v-show="todos.length" v-bind:todos="todos"  v-on:remove-completed="removeCompleted"></to-do-footer>
   </section>
 </template>
 
@@ -21,12 +21,6 @@ export default {
     return {
       todos: ToDoStorage.fetch(),
       newTodo: ''
-    }
-  },
-  props: {
-    visibility: {
-      type: String,
-      default: 'All'
     }
   },
   watch: {

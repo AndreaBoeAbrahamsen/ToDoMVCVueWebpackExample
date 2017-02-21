@@ -4,14 +4,14 @@ module.exports = function (vm){
   var router = new Router();
   ['all', 'active', 'completed'].forEach(function (visibility) {
     router.on(visibility, function () {
-      vm.filter = visibility
+      vm.$store.commit('updateFilter', visibility)
     })
   })
 
   router.configure({
     notfound: function () {
       window.location.hash = ''
-      vm.filter = 'all'
+      vm.$store.commit('updateFilter', 'all')
     }
   })
   router.init()

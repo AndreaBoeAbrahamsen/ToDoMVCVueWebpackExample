@@ -4,13 +4,13 @@ import Vue from 'vue'
 import App from './App'
 import CreateRoutes from './scripts/routes'
 
+import { store } from './scripts/store'
+
 /* eslint-disable no-new */
 var vm = new Vue({
   el: '#app',
-  data: {
-    filter: 'all'
-  },
-  template: '<App :filter="filter"/>',
+  store: store,
+  template: '<App/>',
   components: { App }
 })
 

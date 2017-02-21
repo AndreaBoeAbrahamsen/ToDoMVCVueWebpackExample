@@ -28,15 +28,14 @@ export default{
       default: function () {
         return []
       }
-    },
-    visibility: {
-      type: String,
-      default: 'All'
     }
   },
   computed: {
+    filter: function () {
+      return this.$store.state.filter
+    },
     filteredTodos: function () {
-      return Filters[this.visibility](this.todos)
+      return Filters[this.filter](this.todos)
     },
     allDone: {
       get: function () {

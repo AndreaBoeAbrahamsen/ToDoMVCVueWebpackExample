@@ -4,9 +4,9 @@
 					<strong v-text="remaining"></strong> {{pluralize('item', remaining)}} left
 				</span>
     <ul class="filters">
-      <li><a href="#/all" :class="{selected: visibility == 'all'}">All</a></li>
-      <li><a href="#/active" :class="{selected: visibility == 'active'}">Active</a></li>
-      <li><a href="#/completed" :class="{selected: visibility == 'completed'}">Completed</a></li>
+      <li><a href="#/all" :class="{selected: filter == 'all'}">All</a></li>
+      <li><a href="#/active" :class="{selected: filter == 'active'}">Active</a></li>
+      <li><a href="#/completed" :class="{selected: filter == 'completed'}">Completed</a></li>
     </ul>
     <button class="clear-completed" @click="removeCompleted" v-show="todos.length > remaining">
       Clear completed
@@ -28,13 +28,12 @@ export default{
       default: function () {
         return []
       }
-    },
-    visibility: {
-      type: String,
-      default: 'All'
     }
   },
   computed: {
+    filter: function () {
+      return this.$store.state.filter
+    },
     remaining: function () {
       return Filters.active(this.todos).length
     }
